@@ -4,6 +4,40 @@ import music_tag
 from bitarray import bitarray
 
 
+class color:
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
+
+
+def print_tags(filename: str):
+    f = music_tag.load_file(filename)
+
+    print(color.BOLD + "Filename: " + color.END + color.GREEN + filename + color.END)
+
+    print(color.BOLD + "\nLength: " + color.END + color.GREEN + f["#length"] + color.END)
+    print(color.BOLD + "Bitrate: " + color.END + color.GREEN + f["#bitrate"] + color.END)
+    print(color.BOLD + "Samplerate: " + color.END + color.GREEN + f["#samplerate"] + color.END)
+    print(color.BOLD + "Channels: " + color.END + color.GREEN + f["#channels"] + color.END)
+
+    print(color.BOLD + color.YELLOW + "\nTitle: " + color.END + color.YELLOW + f["tracktitle"] + color.END)
+    print(color.BOLD + color.YELLOW + "Artist: " + color.END + color.YELLOW + f["artist"] + color.END)
+    print(color.BOLD + color.YELLOW + "Album Artist: " + color.END + color.YELLOW + f["albumartist"] + color.END)
+    print(color.BOLD + color.YELLOW + "Album: " + color.END + color.YELLOW + f["album"] + color.END)
+    print(color.BOLD + color.YELLOW + "Date: " + color.END + color.YELLOW + f["year"] + color.END)
+    print(color.BOLD + color.YELLOW + "Track: " + color.END + color.YELLOW + f["tracknumber"] + color.END)
+    print(color.BOLD + color.YELLOW + "Genre: " + color.END + color.YELLOW + f["genre"] + color.END)
+    print(color.BOLD + color.YELLOW + "Disc: " + color.END + color.YELLOW + f["discnumber"] + color.END)
+    print(color.BOLD + color.YELLOW + "Comment: " + color.END + color.YELLOW + f["comment"] + color.END)
+
+
 def change_tags(filename: str, flags: bitarray):
     if len(flags.to01()) != 17:
         raise ValueError('flags argument is not of length 17')
@@ -47,7 +81,7 @@ def change_tags(filename: str, flags: bitarray):
         f['composer'] = user_input
 
     if flags[8] == 1:  # discnumber
-        user_input = str(input('disc number: '))
+        user_input = str(input('disc: '))
         f['discnumber'] = user_input
 
     if flags[9] == 1:  # genre
